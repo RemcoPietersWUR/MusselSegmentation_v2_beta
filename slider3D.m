@@ -61,12 +61,12 @@ YZellipse_out=imellipse(YZaxis,[px_z*0.05,px_y*0.05,px_z*0.9,px_y*0.9]);
 setColor(YZellipse_out,color_out)
 
 %Inner
-XYellipse_in=imellipse(XYaxis,[px_y*0.2,px_x*0.2,px_y*0.6,px_x*0.6]);
-setColor(XYellipse_in,color_in)
-XZellipse_in=imellipse(XZaxis,[px_z*0.2,px_x*0.2,px_z*0.6,px_x*0.6]);
-setColor(XZellipse_in,color_in)
-YZellipse_in=imellipse(YZaxis,[px_z*0.2,px_y*0.2,px_z*0.6,px_y*0.6]);
-setColor(YZellipse_in,color_in)
+% XYellipse_in=imellipse(XYaxis,[px_y*0.2,px_x*0.2,px_y*0.6,px_x*0.6]);
+% setColor(XYellipse_in,color_in)
+% XZellipse_in=imellipse(XZaxis,[px_z*0.2,px_x*0.2,px_z*0.6,px_x*0.6]);
+% setColor(XZellipse_in,color_in)
+% YZellipse_in=imellipse(YZaxis,[px_z*0.2,px_y*0.2,px_z*0.6,px_y*0.6]);
+% setColor(YZellipse_in,color_in)
 % Callback functions
     function sliderZ_callback(hObj, eventdata)
         %Get slide number from slider position
@@ -74,39 +74,39 @@ setColor(YZellipse_in,color_in)
         posXY_out = getPosition(XYellipse_out);
         posXZ_out = getPosition(XZellipse_out);
         posYZ_out = getPosition(YZellipse_out);
-        posXY_in = getPosition(XYellipse_in);
-        posXZ_in = getPosition(XZellipse_in);
-        posYZ_in = getPosition(YZellipse_in);
+%         posXY_in = getPosition(XYellipse_in);
+%         posXZ_in = getPosition(XZellipse_in);
+%         posYZ_in = getPosition(YZellipse_in);
         subplot(1,3,1)
         imshow(squeeze(CTvol(:,:,round(sliceZ,0))));
         title('XY view')
         hold off
         XYellipse_out=imellipse(XYaxis,posXY_out);
         setColor(XYellipse_out,color_out)
-        XYellipse_in=imellipse(XYaxis,posXY_in);
-        setColor(XYellipse_in,color_in)
+%         XYellipse_in=imellipse(XYaxis,posXY_in);
+%         setColor(XYellipse_in,color_in)
         subplot(1,3,2)
         imshow(squeeze(CTvol(:,round(sliceY,0),:)));
         title('XZ view')
         hold off
         XZellipse_out=imellipse(XZaxis,[posXZ_out(1),posXY_out(2),posXZ_out(3),posXY_out(4)]);
         setColor(XZellipse_out,color_out)
-        XZellipse_in=imellipse(XZaxis,[posXZ_in(1),posXY_in(2),posXZ_in(3),posXY_in(4)]);
-        setColor(XZellipse_in,color_in)
+%         XZellipse_in=imellipse(XZaxis,[posXZ_in(1),posXY_in(2),posXZ_in(3),posXY_in(4)]);
+%         setColor(XZellipse_in,color_in)
         subplot(1,3,3)
         imshow(squeeze(CTvol(round(sliceX,0),:,:)));
         title('YZ view')
         hold off
         YZellipse_out=imellipse(YZaxis,[posXZ_out(1),posXY_out(1),posXZ_out(3),posXY_out(3)]);
         setColor(YZellipse_out,color_out)
-        YZellipse_in=imellipse(YZaxis,[posXZ_in(1),posXY_in(1),posXZ_in(3),posXY_in(3)]);
-        setColor(YZellipse_in,color_in)
+%         YZellipse_in=imellipse(YZaxis,[posXZ_in(1),posXY_in(1),posXZ_in(3),posXY_in(3)]);
+%         setColor(YZellipse_in,color_in)
         posXY_out = getPosition(XYellipse_out);
         posXZ_out = getPosition(XZellipse_out);
         posYZ_out = getPosition(YZellipse_out);
-        posXY_in = getPosition(XYellipse_in);
-        posXZ_in = getPosition(XZellipse_in);
-        posYZ_in = getPosition(YZellipse_in);
+%         posXY_in = getPosition(XYellipse_in);
+%         posXZ_in = getPosition(XZellipse_in);
+%         posYZ_in = getPosition(YZellipse_in);
     end
     function sliderY_callback(hObj, eventdata)
         %Get slide number from slider position
@@ -114,39 +114,39 @@ setColor(YZellipse_in,color_in)
         posXY_out = getPosition(XYellipse_out);
         posXZ_out = getPosition(XZellipse_out);
         posYZ_out = getPosition(YZellipse_out);
-        posXY_in = getPosition(XYellipse_in);
-        posXZ_in = getPosition(XZellipse_in);
-        posYZ_in = getPosition(YZellipse_in);
+%         posXY_in = getPosition(XYellipse_in);
+%         posXZ_in = getPosition(XZellipse_in);
+%         posYZ_in = getPosition(YZellipse_in);
         subplot(1,3,2)
         imshow(squeeze(CTvol(:,round(sliceY,0),:)));
         title('XZ view')
         hold off
         XZellipse_out=imellipse(XZaxis,posXZ_out);
         setColor(XZellipse_out,color_out)
-        XZellipse_in=imellipse(XZaxis,posXZ_in);
-        setColor(XZellipse_in,color_in)
+%         XZellipse_in=imellipse(XZaxis,posXZ_in);
+%         setColor(XZellipse_in,color_in)
         subplot(1,3,1)
         imshow(squeeze(CTvol(:,:,round(sliceZ,0))));
         title('XZ view')
         hold off
         XYellipse_out=imellipse(XYaxis,[posXY_out(1),posXZ_out(2),posXY_out(3),posXZ_out(4)]);
         setColor(XYellipse_out,color_out)
-        XYellipse_in=imellipse(XYaxis,[posXY_in(1),posXZ_in(2),posXY_in(3),posXZ_in(4)]);
-        setColor(XYellipse_in,color_in)
+%         XYellipse_in=imellipse(XYaxis,[posXY_in(1),posXZ_in(2),posXY_in(3),posXZ_in(4)]);
+%         setColor(XYellipse_in,color_in)
         subplot(1,3,3)
         imshow(squeeze(CTvol(round(sliceX,0),:,:)));
         title('YZ view')
         hold off
         YZellipse_out=imellipse(YZaxis,[posYZ_out(1),posXY_out(1),posXZ_out(3),posXY_out(3)]);
         setColor(YZellipse_out,color_out)
-        YZellipse_in=imellipse(YZaxis,[posYZ_in(1),posXY_in(1),posXZ_in(3),posXY_in(3)]);
-        setColor(YZellipse_in,color_in)
+%         YZellipse_in=imellipse(YZaxis,[posYZ_in(1),posXY_in(1),posXZ_in(3),posXY_in(3)]);
+%         setColor(YZellipse_in,color_in)
         posXY_out = getPosition(XYellipse_out);
         posXZ_out = getPosition(XZellipse_out);
         posYZ_out = getPosition(YZellipse_out);
-        posXY_in = getPosition(XYellipse_in);
-        posXZ_in = getPosition(XZellipse_in);
-        posYZ_in = getPosition(YZellipse_in);
+%         posXY_in = getPosition(XYellipse_in);
+%         posXZ_in = getPosition(XZellipse_in);
+%         posYZ_in = getPosition(YZellipse_in);
     end
     function sliderX_callback(hObj, eventdata)
         %Get slide number from slider position
@@ -154,39 +154,39 @@ setColor(YZellipse_in,color_in)
         posXY_out = getPosition(XYellipse_out);
         posXZ_out = getPosition(XZellipse_out);
         posYZ_out = getPosition(YZellipse_out);
-        posXY_in = getPosition(XYellipse_in);
-        posXZ_in = getPosition(XZellipse_in);
-        posYZ_in = getPosition(YZellipse_in);
+%         posXY_in = getPosition(XYellipse_in);
+%         posXZ_in = getPosition(XZellipse_in);
+%         posYZ_in = getPosition(YZellipse_in);
         subplot(1,3,3)
         imshow(squeeze(CTvol(round(sliceX,0),:,:)));
         title('YZ view')
         hold off
         YZellipse_out=imellipse(YZaxis,posYZ_out);
         setColor(YZellipse_out,color_out)
-        YZellipse_in=imellipse(YZaxis,posYZ_in);
-        setColor(YZellipse_in,color_in)
+%         YZellipse_in=imellipse(YZaxis,posYZ_in);
+%         setColor(YZellipse_in,color_in)
         subplot(1,3,1)
         imshow(squeeze(CTvol(:,:,round(sliceZ,0))));
         title('XY view')
         hold off
         XYellipse_out=imellipse(XYaxis,[posYZ_out(2),posXY_out(2),posYZ_out(4),posXY_out(4)]);
         setColor(XYellipse_out,color_out)
-        XYellipse_in=imellipse(XYaxis,[posYZ_in(2),posXY_in(2),posYZ_in(4),posXY_in(4)]);
-        setColor(XYellipse_in,color_in)
+%         XYellipse_in=imellipse(XYaxis,[posYZ_in(2),posXY_in(2),posYZ_in(4),posXY_in(4)]);
+%         setColor(XYellipse_in,color_in)
         subplot(1,3,2)
         imshow(squeeze(CTvol(:,round(sliceY,0),:)));
         title('XZ view')
         hold off
         XZellipse_out=imellipse(XZaxis,[posXZ_out(1),posXY_out(2),posXZ_out(3),posXY_out(4)]);
         setColor(XZellipse_out,color_out)
-        XZellipse_in=imellipse(XZaxis,[posXZ_in(1),posXY_in(2),posXZ_in(3),posXY_in(4)]);
-        setColor(XZellipse_in,color_in)
+%         XZellipse_in=imellipse(XZaxis,[posXZ_in(1),posXY_in(2),posXZ_in(3),posXY_in(4)]);
+%         setColor(XZellipse_in,color_in)
         posXY_out = getPosition(XYellipse_out);
         posXZ_out = getPosition(XZellipse_out);
         posYZ_out = getPosition(YZellipse_out);
-        posXY_in = getPosition(XYellipse_in);
-        posXZ_in = getPosition(XZellipse_in);
-        posYZ_in = getPosition(YZellipse_in);
+%         posXY_in = getPosition(XYellipse_in);
+%         posXZ_in = getPosition(XZellipse_in);
+%         posYZ_in = getPosition(YZellipse_in);
     end
 uiwait(hFig);
 end

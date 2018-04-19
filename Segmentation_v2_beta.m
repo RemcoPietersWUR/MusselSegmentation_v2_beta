@@ -9,9 +9,6 @@ clear all
 close all
 
 %Parameters
-Binarize_method = 'global'; %Threshold method. 'global' global thresholding using Otsu's method.
-% 'adaptive' loccaly thresholding using first order statistics
-adj_intensity = true;
 median_filter = true;
 median_sigma = 1; %Numbers of neigbours for median filtering
 conn = 8; %Connectivity for the connected components 2D: 4 or 8
@@ -44,7 +41,7 @@ clear CTstack
 [posXY,posXZ,posYZ,posXY_in,posXZ_in,posYZ_in]=slider3D(IMrot); %posXY=[xmin ymin width height]
 %ellipse can be placed outside of the image (e.g. half a mussel), so check
 %vs slices (stack size)
-pause
+
 %Make substack
 Zstart=round(posXZ(1),0);
 Zstop=Zstart+round(posXZ(3),0);
@@ -73,16 +70,13 @@ IMrot=IMrot(:,:,Zstart:Zstop);
 if median_filter
     IMrot = medfilt3(IMrot,median_sigma*[3,3,3]);
 end
-[graylevel] = graythresh(IMrot(:,:,ui_slice));
+
 %% Binarize
 BW=false(size(IMrot));
+graylevel=zeros(1,px_z);
 for idx = 1:px_z
-    if adj_intensity
-        BW(:,:,idx) = imbinarize(imadjust(IMrot(:,:,idx)), Binarize_method);
-    else
-        %BW(:,:,idx) = imbinarize(IMrot(:,:,idx), Binarize_method);
-        BW(:,:,idx) = imbinarize(IMrot(:,:,idx), graylevel);
-    end
+        graylevel(1,idx)=musselThreshold(IMrot(:,:,idx),idx,posXY(3)/2,posXY(4)/2,posXZ(3)/2,posXY);
+        BW(:,:,idx) = imbinarize(IMrot(:,:,idx), graylevel(1,idx));
 end
 
 %% Compute convex hull
@@ -270,17 +264,21 @@ for slice = 1:px_z
     clear TM2
     clear TM3
 end
-slider(FirstSlice,LastSlice,IMrot,TM,'Area');
+TMnew = false(size(TM));
+for slice = 1:px_z
+    TMnew(:,:,slice)=boundary_select(TM(:,:,slice));
+end
+slider(FirstSlice,LastSlice,IMrot,TMnew,'Area');
 
 %Calculate region properties
 %first for slice 1 to determine size table
-stats = regionprops('table',TM(:,:,1),IMrot(:,:,1),'Area',...
+stats = regionprops('table',TMnew(:,:,1),IMrot(:,:,1),'Area',...
     'BoundingBox','Centroid','Perimeter','MaxIntensity','MeanIntensity',...
     'MinIntensity','WeightedCentroid');
 Slice = ones(height(stats),1).*1;
 SliceProps = [table(Slice),stats];
 for slice = 2:px_z
-stats = regionprops('table',TM(:,:,slice),IMrot(:,:,slice),'Area',...
+stats = regionprops('table',TMnew(:,:,slice),IMrot(:,:,slice),'Area',...
     'BoundingBox','Centroid','Perimeter','MaxIntensity','MeanIntensity',...
     'MinIntensity','WeightedCentroid');
 Slice = ones(height(stats),1).*slice;
@@ -306,7 +304,7 @@ s2=scatter3(VarPlot(:,10),VarPlot(:,11),VarPlot(:,1),2,[1,0,0],'filled');
 hold off
 xlim([1,1024]);
 ylim([1,1024]);
-zlim([1,px_z])
+zlim([1,px_z]) 
 xlabel('X (px)')
 ylabel('Y (px)')
 zlabel('Height (px)')

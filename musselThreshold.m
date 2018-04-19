@@ -1,6 +1,7 @@
 function [grayThreshold]=musselThreshold(IM,idx,ellipse_a,ellipse_b,ellipse_c,XY0)
 %musselThreshold determine grey level threshold a cross section level using
-%enclosing ellipse limitation
+%enclosing ellipse limitation. XY0 are the coordinates of the XY ellipse
+%(from imellipse)
 
 %Sample area (rectangular) is determined by the local radius of the ellipse
 %local radius along x axis
