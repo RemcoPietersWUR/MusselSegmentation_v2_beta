@@ -115,7 +115,7 @@ end
         Nbounds = length(Boundaries);
         centroids = zeros(Nbounds,2);
         for idx = 1:Nbounds
-            BW = zeros(size(IM));
+            BW = false(size(IM));
             boundary = Boundaries{idx,1};
             for k = 1:length(boundary)
                 BW(boundary(k,1),boundary(k,2))=1;
@@ -129,7 +129,7 @@ end
     function TMnew = shell_area(Boundaries, IM, label)
         %Boundary 1
         boundary1 = Boundaries{label(1),1};
-        TM1 = zeros(size(IM));
+        TM1 = false(size(IM));
         for k = 1:length(boundary1)
             TM1(boundary1(k,1),boundary1(k,2))=1;
         end
@@ -137,16 +137,16 @@ end
         Area1=bwarea(TM1);
         %Boundary 2
         boundary2 = Boundaries{label(2),1};
-        TM2 = zeros(size(IM));
+        TM2 = false(size(IM));
         for k = 1:length(boundary2)
             TM2(boundary2(k,1),boundary2(k,2))=1;
         end
         TM2=imfill(TM2,'holes');
         Area2=bwarea(TM2);
         if Area1 > Area2
-            TMnew = imsubtract(TM1,TM2);
+            TMnew = logical(imsubtract(TM1,TM2));
         else
-            TMnew = imsubtract(TM2,TM1);
+            TMnew = logical(imsubtract(TM2,TM1));
         end
     end
 
