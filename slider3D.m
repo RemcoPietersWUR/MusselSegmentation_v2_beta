@@ -1,4 +1,4 @@
-function [posXY_out,posXZ_out,posYZ_out,posXY_in,posXZ_in,posYZ_in]=slider3D(CTvol)
+function [posXY_out,posXZ_out,posYZ_out]=slider3D(CTvol)
 %Slider #D volume GUI
 
 %Image volume size

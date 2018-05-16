@@ -2,8 +2,10 @@ function [TMnew]=boundary_select(IM)
 
 %find boundaries
 [Boundaries,L,N,A] = bwboundaries(IM,8,'holes');
-Nbound = length(Boundaries);
-Nobject = N;
+Nbound = length(Boundaries)
+Nobject = N
+NA = nnz(A)
+size(A)
 %if Nbound > Nobjects these boundaries are holes.
 for idx = 1:numel(Boundaries)
     BW=zeros(size(IM));
@@ -25,11 +27,10 @@ if Nobject < Nbound
     (centroids(1:idx,2)-centroids(idx+1,2)).^2;
 [~,Label]=sort(distances);
     else
-        %add function
-%         Boundaries
-%         for k = 1:Nobject
+%          Boundaries
+%          for k = 1:Nobject
 %             k
-%     enclosing_boundary  = find(A(k,:))
+%      enclosing_boundary  = find(A(k,:))
 %     enclosed_boundaries = find(A(:,k))
 %         end
     end

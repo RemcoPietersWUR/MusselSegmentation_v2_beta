@@ -1,4 +1,4 @@
-%Segmentation_v2_alpha
+%Segmentation_v2_beta
 %--------------------------------------------------------------------------
 %ToDo
 
@@ -38,9 +38,13 @@ clear CTstack
 
 
 %Select processing region between foot and nose
-[posXY,posXZ,posYZ,posXY_in,posXZ_in,posYZ_in]=slider3D(IMrot); %posXY=[xmin ymin width height]
+[posXY,posXZ,posYZ]=slider3D(IMrot); %posXY=[xmin ymin width height]
 %ellipse can be placed outside of the image (e.g. half a mussel), so check
 %vs slices (stack size)
+
+%Save preprocessing data
+uisave({'FileInfo','orientation_angle','posXY','posXZ','posYZ'},...
+    [FileInfo.path, filesep, FileInfo.prefix,'_preproc.mat']);
 
 %Make substack
 Zstart=round(posXZ(1),0);
@@ -266,8 +270,10 @@ for slice = 1:px_z
 end
 TMnew = false(size(TM));
 for slice = 1:px_z
-    TMnew(:,:,slice)=boundary_select(TM(:,:,slice));
+    TMnew(:,:,slice)=boundary_select2(TM(:,:,slice));
 end
+%Save post proc
+uisave({'TMnew'},[FileInfo.path, filesep, FileInfo.prefix,'_postproc.mat']);
 slider(FirstSlice,LastSlice,IMrot,TMnew,'Area');
 
 %Calculate region properties
@@ -284,12 +290,12 @@ stats = regionprops('table',TMnew(:,:,slice),IMrot(:,:,slice),'Area',...
 Slice = ones(height(stats),1).*slice;
 SliceProps = [SliceProps;[table(Slice),stats]];
 end
-[filenameProps, pathnameProps] = uiputfile('ShellProps.xlsx',...
+[filenameProps, pathnameProps] = uiputfile([FileInfo.path, filesep, FileInfo.prefix,'_ShellProps.csv'],...
                        'Save file');
 if isequal(filenameProps,0) || isequal(pathnameProps,0)
    disp('User selected Cancel')
 else
-   writetable(SliceProps,fullfile(pathnameProps,filenameProps));
+   writetable(SliceProps,fullfile(pathnameProps,filenameProps),'Delimiter','comma');
 end
 
 %Plots
