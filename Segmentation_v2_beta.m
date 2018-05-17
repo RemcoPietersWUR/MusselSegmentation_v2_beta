@@ -245,10 +245,12 @@ for slice = 1:px_z
     clear delta
     else
         %Fix this later
-        px_z=slice-1
+        px_z_top(slice)=1;        
     end
 end
-
+if exist('px_z_top')
+    px_z=find(px_z_top,1)-1;
+end
 for slice = 1:px_z
     TM(:,:,slice)=bwmorph(TM(:,:,slice),'bridge');
     TM(:,:,slice)=imclose(TM(:,:,slice),se2);
