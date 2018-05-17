@@ -30,7 +30,7 @@ LastSlice = FileInfo.id_stop; %Last slice for segmentation, type char
 CTstack=loadIMsequence(FileInfo,FirstSlice,LastSlice,1);
 
 %%Align and select mussel
-ui_slice = round(str2double(LastSlice)-str2double(FirstSlice),0)/2; %User input slice
+ui_slice = round((str2double(LastSlice)-str2double(FirstSlice))/2,0); %User input slice
 [orientation_angle,IMrot] = select_cross_section(CTstack,ui_slice);
 
 %Free memory
@@ -100,6 +100,7 @@ end
 %Boundary of convex hull
 for slice = 1:px_z
     B = bwboundaries(BWhull(:,:,slice),'noholes');
+    if isempty(B)==0
     A= B{1,1};
     
     %Displacement between points
@@ -242,7 +243,12 @@ for slice = 1:px_z
     TM(:,:,slice)=logical(imadd(TMout_c,TMin_c));
     %Clean up
     clear delta
+    else
+        %Fix this later
+        px_z=slice-1
+    end
 end
+
 for slice = 1:px_z
     TM(:,:,slice)=bwmorph(TM(:,:,slice),'bridge');
     TM(:,:,slice)=imclose(TM(:,:,slice),se2);
@@ -257,9 +263,11 @@ for slice = 1:px_z
     for id=1:length(boundary1)
         TM2(boundary1(id,1),boundary1(id,2))=true;
     end
+    if length(Bound)>1
      boundary2=Bound{idx(2)};
     for id=1:length(boundary2)
         TM3(boundary2(id,1),boundary2(id,2))=true;
+    end
     end
     TM(:,:,slice)=imabsdiff(imfill(TM2,'holes'),imfill(TM3,'holes'));
     clear bound
