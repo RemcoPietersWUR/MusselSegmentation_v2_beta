@@ -28,6 +28,11 @@ FieldWidth = numel(idFirst);
 formatSpec=['%0',num2str(FieldWidth),'u'];
 for id=2:Nslices
     SliceNumber = sprintf(formatSpec,(str2double(idFirst)-1+id));
-    CTstack(:,:,:,id)=imread([FileInfo.path, filesep, FileInfo.prefix, ...
+    IM=imread([FileInfo.path, filesep, FileInfo.prefix, ...
     SliceNumber, FileInfo.ext]);
+    [~,~,IMdepth]=size(IM);
+if IMdepth == 3
+    IM=imadd(immultiply(IM(:,:,1),0.5),immultiply(IM(:,:,2),0.5));
+end
+    CTstack(:,:,:,id)=IM;
 end
