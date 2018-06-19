@@ -1,3 +1,4 @@
+%close small gaps
 IM = TM(:,:,686);%686
 close all
 % figure;
