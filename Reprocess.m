@@ -21,10 +21,10 @@ for sample = 1:Nmussel
    TM=m.TMnew;
    TMnew = false(size(TM));
    [~,~,px_z]=size(TM);
-% for slice = 1:px_z
-%     TMnew(:,:,slice)=close_gap2(TM(:,:,slice),[0,100]);
-% end
-TMnew=TM;
+ for slice = 1:px_z
+     TMnew(:,:,slice)=close_gap2(TM(:,:,slice),[0,100]);
+ end
+
    clear TM
    [path,name,ext]=fileparts(fullfile(files(files_idx(sample)).folder,files(files_idx(sample)).name));
    new_name = strrep(name, 'postproc', 'repostproc');
@@ -45,4 +45,5 @@ SliceProps = [SliceProps;[table(Slice),stats]];
 end
 
    writetable(SliceProps,[path,filesep,new_name,'_ShellProps.csv'],'Delimiter','comma');
+ clear TMnew
 end
